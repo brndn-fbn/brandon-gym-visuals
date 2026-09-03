@@ -149,6 +149,42 @@ const motionTitles = [
   "Movement Study"
 ];
 
+/* =========================================
+STILLS TABS
+========================================= */
+
+const stillsTabs =
+  document.querySelectorAll(".stills-tab");
+
+function showStillsPanel(targetId) {
+
+  stillsTabs.forEach((tab) => {
+
+    const isActive =
+      tab.dataset.target === targetId;
+
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    tab.tabIndex = isActive ? 0 : -1;
+
+  });
+
+  document
+    .querySelectorAll('.photo-grid[id^="panel-"]')
+    .forEach((panel) => {
+      panel.hidden = panel.id !== targetId;
+    });
+
+}
+
+stillsTabs.forEach((tab) => {
+
+  tab.addEventListener("click", () => {
+    showStillsPanel(tab.dataset.target);
+  });
+
+});
+
 let currentIndex = 0;
 
 /* =========================================
