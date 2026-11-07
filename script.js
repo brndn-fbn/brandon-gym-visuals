@@ -144,9 +144,7 @@ const motionTitles = [
   "Training Session",
   "Loaded Movement",
   "Controlled Eccentric",
-  "Working Reps",
-  "Isolated Movement",
-  "Movement Study"
+  "Working Reps"
 ];
 
 /* =========================================
@@ -204,6 +202,21 @@ function showMotion(index) {
   if (index >= slides.length) {
     index = 0;
   }
+
+  // Pause any playing YouTube video before switching slides
+  slides.forEach((slide) => {
+    const frame = slide.querySelector("iframe");
+    if (frame && frame.contentWindow) {
+      frame.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: "pauseVideo",
+          args: ""
+        }),
+        "*"
+      );
+    }
+  });
 
   currentIndex = index;
 
